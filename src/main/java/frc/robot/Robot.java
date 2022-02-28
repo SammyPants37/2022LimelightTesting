@@ -32,9 +32,9 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //post to smart dashboard periodically
-    SmartDashboard.putNumber("LimelightX", m_robotContainer.x);
-    SmartDashboard.putNumber("LimelightY", m_robotContainer.y);
-    SmartDashboard.putNumber("LimelightArea", m_robotContainer.area);
+    SmartDashboard.putNumber("LimelightX", RobotContainer.x);
+    SmartDashboard.putNumber("LimelightY", RobotContainer.y);
+    SmartDashboard.putNumber("LimelightArea", RobotContainer.area);
   }
 
   /**

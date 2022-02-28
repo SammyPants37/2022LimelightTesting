@@ -10,16 +10,16 @@ private static XboxController controller = new XboxController(0);
   private static double rot = 0;
 
   public static void driveMotors() {
-    if (controller.getRawAxis(Constants.rotChannel) >= Constants.joyMin |
-        controller.getRawAxis(Constants.rotChannel) <= -Constants.joyMin) {
-      rot = controller.getRawAxis(Constants.rotChannel);
+    if (controller.getRawAxis(Constants.IOConstants.rightXAxisChannel) >= Constants.joyMin |
+        controller.getRawAxis(Constants.IOConstants.rightXAxisChannel) <= -Constants.joyMin) {
+      rot = controller.getRawAxis(Constants.IOConstants.rightXAxisChannel);
     } else {
       rot = 0;
     }
     // speed setting
-    if (controller.getRawAxis(Constants.speedChannel) >= Constants.joyMin |
-        controller.getRawAxis(Constants.speedChannel) <= -Constants.joyMin) {
-      speed = controller.getRawAxis(Constants.speedChannel);
+    if (controller.getRawAxis(Constants.IOConstants.leftYAxisChannel) >= Constants.joyMin |
+        controller.getRawAxis(Constants.IOConstants.leftYAxisChannel) <= -Constants.joyMin) {
+      speed = controller.getRawAxis(Constants.IOConstants.leftYAxisChannel);
     } else {
       speed = 0;
     }
