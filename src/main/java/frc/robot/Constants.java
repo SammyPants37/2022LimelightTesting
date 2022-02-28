@@ -16,6 +16,8 @@ public final class Constants {
 
     public static double joyMin = 0.1;
     public static double speedMax = 0.9;
+    public static double climberSpeed = 0.5;
+    public static double shooterSpeed = 0.9;
 
     public static final class motorConstants {
         public final static int hoodServoPort = 0;
@@ -29,6 +31,14 @@ public final class Constants {
         public final static int shooterMotorPort = 9;
         public final static int leftClimberMotorPort = 10;
         public final static int rightClimberMotorPort = 11;
+    }
+
+    public static final class Pneumaticsconstants {
+        public final static int leftIntakeSolenoidPort = 1;
+        public final static int rightIntakeSolenoidPort = 2;
+
+        public final static int leftClimberSolenoidPort = 3;
+        public final static int rightClimberSolenoidPort = 4;
     }
 
     public static final class IOConstants {
