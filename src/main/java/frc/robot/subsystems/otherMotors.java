@@ -30,16 +30,33 @@ public class otherMotors extends SubsystemBase{
         shooter.set(speed);
     }
 
+    public void stopShooter() {
+        shooter.stopMotor();
+    }
+
     public void runCollector(double speed) {
         collector.set(speed);
+    }
+
+    public void stopcollector() {
+        collector.stopMotor();
     }
 
     public void runConveyor(double speed) {
         conveyor.set(speed);
     }
 
+    public void stopconveyor() {
+        conveyor.stopMotor();
+    }
+
     public void runClimber(double speed) {
         LClimber.set(speed);
         RClimber.set(speed);
+    }
+
+    public void stopClimber() {
+        LClimber.stopMotor();
+        RClimber.stopMotor();
     }
 }

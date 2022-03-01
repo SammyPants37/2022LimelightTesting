@@ -40,7 +40,7 @@ public class doMotors extends SubsystemBase{
     DriveTrain.arcadeDrive(-speed, rot);
   }
 
-  public static void otherMotors() {
+  public static void collectorMotors() {
     if (controller.getRawAxis(Constants.IOConstants.rightTriggerChannel) >= Constants.joyMin |
         controller.getRawAxis(Constants.IOConstants.rightTriggerChannel) <= -Constants.joyMin) {
       collectorSpeed = controller.getRawAxis(Constants.IOConstants.rightTriggerChannel);
@@ -56,15 +56,5 @@ public class doMotors extends SubsystemBase{
     }
     motors.runCollector(collectorSpeed);
     motors.runConveyor(collectorSpeed);
-
-    if (controller.getRawButton(Constants.IOConstants.leftBumperChannel)) {
-      motors.runShooter(Constants.shooterSpeed);
-    }
-
-    if (controller.getRawButton(Constants.IOConstants.aButtonChannel)) {
-      motors.runClimber(Constants.climberSpeed);
-    } else if (controller.getRawButton(Constants.IOConstants.bButtonChannel)) {
-      motors.runClimber(-Constants.climberSpeed);
-    }
   }
 }

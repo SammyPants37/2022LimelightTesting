@@ -4,11 +4,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.DriveTrain;
-
+import frc.robot.subsystems.limelightRun;
+import frc.robot.subsystems.otherMotors;
+import frc.robot.subsystems.phematics;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -31,23 +35,57 @@ public class RobotContainer {
   static NetworkTableEntry ty = table.getEntry("ty");
   static NetworkTableEntry ta = table.getEntry("ta");
 
-  //read values periodically
+  //read limelight periodically
   public static double x = tx.getDouble(0.0);
   public static double y = ty.getDouble(0.0);
   public static double area = ta.getDouble(0.0);
 
-  
+  public limelightRun lRun = new limelightRun();
+  public otherMotors otherMs = new otherMotors();
+  public phematics pnematic = new phematics();
 
-  // final JoystickButton buttonname = new JoystickButton(controller, Constants.buttonchannel);
+  final JoystickButton buttonX = new JoystickButton(controller, Constants.IOConstants.xButtonChannel);
+  final JoystickButton shooterButton = new JoystickButton(controller,
+  Constants.IOConstants.leftBumperChannel);
+  final JoystickButton climberUp = new JoystickButton(controller, Constants.IOConstants.aButtonChannel);
+  final JoystickButton climberDown = new JoystickButton(controller,
+  Constants.IOConstants.bButtonChannel);
+  final JoystickButton toggleClimberpnematics = new JoystickButton(controller,
+  Constants.IOConstants.startButtonChannel);
+  final JoystickButton toggleCollectorpnematics = new JoystickButton(controller,
+  Constants.IOConstants.backButtonChannel);
 
   //////////////
   // COMMANDS //
   //////////////
 
-  // StartEndCommand name = new StartEndCommand(
-  //   () -> startfunk,
-  //   () -> endfunk,
-  //   requirements);
+  StartEndCommand turnWithLimelight = new StartEndCommand(
+    () -> limelightRun.aim(),
+    () -> limelightRun.stop(),
+  lRun);
+  
+  StartEndCommand runShooter = new StartEndCommand(
+    () -> otherMs.runShooter(Constants.shooterSpeed),
+    () -> otherMs.stopShooter(),
+    otherMs);
+
+  StartEndCommand climbClimber = new StartEndCommand(
+    () -> otherMs.runClimber(Constants.climberSpeed),
+    () -> otherMs.stopClimber(),
+  otherMs);
+
+  StartEndCommand lowerClimber = new StartEndCommand(
+    () -> otherMs.runClimber(-Constants.climberSpeed),
+    () -> otherMs.stopClimber(),
+  otherMs);
+  
+  InstantCommand toggleCollector = new InstantCommand(
+    () -> pnematic.toggleCollector(),
+  pnematic);
+  
+  InstantCommand toggleClimber = new InstantCommand(
+    () -> pnematic.toggleClimber(),
+    pnematic);
 
   //////////////////////
   // no more commands //
@@ -59,14 +97,13 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
   private void configureButtonBindings() {
-    // buttonname.whileHeld(name);
+    buttonX.whileHeld(turnWithLimelight);
+    shooterButton.whileHeld(runShooter);
+    climberUp.whileHeld(climbClimber);
+    climberDown.whileHeld(lowerClimber);
+    toggleCollectorpnematics.whenPressed(toggleCollector);
+    toggleClimberpnematics.whenPressed(toggleClimber);
   }
 
   public void doAton() {
